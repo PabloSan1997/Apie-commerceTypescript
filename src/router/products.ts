@@ -25,6 +25,15 @@ routerPorduc.get("/category/:category", async (req:Request, res:Response, next:N
     }
 });
 
+routerPorduc.get("/:id", async (req:Request, res:Response, next:NextFunction)=>{
+    try {
+        const data = await servicio.leerId(req.params.id);
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+});
+
 routerPorduc.post("/", 
 validatorHandler(agregarProducto, "body"),
 async (req:Request, res:Response, next:NextFunction)=>{

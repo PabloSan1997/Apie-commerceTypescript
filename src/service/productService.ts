@@ -9,6 +9,13 @@ export class ServicioProductos {
         }
         return data;
     }
+    async leerId(id:string):Promise<LeerProductosFull>{
+        const data = await productosModel.findById(id) as LeerProductosFull;
+        if(!data){
+            throw boom.badRequest("NO se encuentra ese producto");
+        }
+        return data;
+    }
     async leerCategoria(category: string):Promise<LeerProductosFull[]>{
         const data: LeerProductosFull[] = await productosModel.find({category});
         if(data.length===0){

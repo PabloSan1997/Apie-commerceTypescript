@@ -8,8 +8,8 @@ dotenv.config();
 
 const palabra = process.env.WORD as string;
 export class ServicioUser {
-    async leerUsuarios():Promise<Usuario[]>{
-        const data = await userModel.find() as Usuario[];
+    async leerUsuarios():Promise<UsuarioFull[]>{
+        const data = await userModel.find() as UsuarioFull[];
         if(data.length===0){
             throw boom.notFound("no se encuentran elementos");
         }
@@ -38,7 +38,7 @@ export class ServicioUser {
             const {preinicio} = cuerpo;
            try {
             const datos = await generar(preinicio, palabra);
-            const encontrar = await userModel.findOne({...datos}) as Usuario;
+            const encontrar = await userModel.findOne({...datos}) as UsuarioFull;
             if(!encontrar){
                 throw boom.badRequest("No encontrar");
             }
@@ -48,7 +48,7 @@ export class ServicioUser {
            }
         }else{
             const {user, email, password} = cuerpo;
-            const encontrar = await userModel.findOne({user, email}) as Usuario;
+            const encontrar = await userModel.findOne({user, email}) as UsuarioFull;
             if(!encontrar){
                 throw boom.badRequest("Usuario y contraseña incorrectas");
             }
@@ -57,7 +57,7 @@ export class ServicioUser {
                 throw boom.badRequest("Contraseña incorrectas");
             }
             const encriptar = await bcrypt.hash(password, 8);
-            const nuevo:Usuario = {
+            const nuevo:UsuarioFull = {
                 ...encontrar,
                 password:encriptar
             }
@@ -76,6 +76,13 @@ type Message = {
     message: string
 }
 export type Usuario = {
+    user: string,
+    email: string,
+    password: string,
+    role:boolean
+}
+export type UsuarioFull = {
+    _id:string,
     user: string,
     email: string,
     password: string,
