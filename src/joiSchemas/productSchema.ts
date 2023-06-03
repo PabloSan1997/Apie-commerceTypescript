@@ -26,3 +26,4 @@ export const editarProducto:ObjectSchema<LeerProductos> = joi.object({
     description
 });
 
+

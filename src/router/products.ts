@@ -15,7 +15,15 @@ routerPorduc.get("/", async (req:Request, res:Response, next:NextFunction)=>{
         next(error);
     }
 });
-
+routerPorduc.get("/category/:category", async (req:Request, res:Response, next:NextFunction)=>{
+    const {category} = req.params;
+    try {
+        const data = await servicio.leerCategoria(category);
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+});
 
 routerPorduc.post("/", 
 validatorHandler(agregarProducto, "body"),
@@ -39,3 +47,11 @@ async (req:Request, res:Response, next:NextFunction)=>{
     }
 });
 
+routerPorduc.delete("/:id", async (req:Request, res:Response, next:NextFunction)=>{
+    try {
+        const data = await servicio.borrarProducto(req.params.id);
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+});

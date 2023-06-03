@@ -9,6 +9,13 @@ export class ServicioProductos {
         }
         return data;
     }
+    async leerCategoria(category: string):Promise<LeerProductosFull[]>{
+        const data: LeerProductosFull[] = await productosModel.find({category});
+        if(data.length===0){
+            throw boom.notFound("No se encontraro elementos");
+        }
+        return data;
+    }
     async agregarProducto(data: LeerProductos): Promise<Message> {
         await productosModel.create(data);
         return { message: "Se agregó producto con exito" };
@@ -20,6 +27,13 @@ export class ServicioProductos {
         }
         return {message:`Producto ${id} cambiado con exito`};
 
+    }
+    async borrarProducto(id:string):Promise<Message>{
+        const data = await productosModel.findOneAndDelete({_id:id});
+        if(!data){
+            throw boom.badRequest("No se encontro elemento");
+        }
+        return {message:`Se borro elemento ${id} con exito`};
     }
 }
 
