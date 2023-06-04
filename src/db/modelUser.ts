@@ -16,7 +16,12 @@ const userSchema = new mongoose.Schema(
       role:{
         type:Boolean,
         default:false
+      },
+      products:{
+        type:[String],
+        default:[]
       }
+
     },
     {
         versionKey:false

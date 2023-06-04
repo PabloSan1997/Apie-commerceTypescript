@@ -1,7 +1,7 @@
 import express, { Router, Request, Response, NextFunction } from "express";
 import { ServicioUser } from "../service/userService";
 import { validatorHandler } from "../middlewares/joiHandle";
-import { agregarUsusario, iniciarSeccion } from "../joiSchemas/userSchema";
+import { agregarUsusario, carritoSchema, iniciarSeccion } from "../joiSchemas/userSchema";
 const servicio = new ServicioUser();
 export const routerUser: Router = express.Router();
 
@@ -29,9 +29,19 @@ routerUser.post("/inicio",
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             const datos = await servicio.inicio(req.body);
-            res.json(datos);
+            res.status(201).json(datos);
         } catch (error) {
             next(error);
         }
     }
 );
+routerUser.post("/carrito",
+    validatorHandler(carritoSchema, "body") ,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const datos = await servicio.agregarCarrito(req.body);
+            res.status(201).json(datos);
+        } catch (error) {
+            next(error);
+        }
+    });
