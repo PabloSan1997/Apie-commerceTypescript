@@ -58,6 +58,7 @@ Base de las rutas
 ```http
 GET /api/v1/products
 ```
+
 |Patametro|Tipo|
 |-|-|
 |_id|String|
@@ -116,7 +117,7 @@ PATCH /api/v1/products/:id
 Elementos que se puede editar
 
 |Patametro|Tipo|
-|-|-|-|-|
+|-|-|
 |name|String|
 |price|Number|
 |stoke|Boolean|
@@ -130,7 +131,7 @@ Elementos que se puede editar
 GET /api/v1/users/
 ```
 |Patametro|Tipo|
-|-|-|-|-|
+|-|-|
 |_id|String|
 |user|String|
 |email|String|
@@ -143,11 +144,15 @@ GET /api/v1/users/
 ``` http
 POST /api/v1/users/agregar
 ```
-|Patametro|Tipo|
+
+Body request
+
+|Patametro|Tipo|Requerido|Default value|
 |-|-|-|-|
-|user|String|
-|email|String|
-|password|String|
+|user|String|✔|-|
+|email|String|✔|-|
+|password|String|✔|-|
+|role|Boolean|-|False|
 
 #### Loging
 
@@ -158,19 +163,19 @@ POST /api/v1/users/inicio
 Body Request
 
 |Patametro|Tipo|
-|-|-|-|-|
+|-|-|
 |user|String|
 |email|String|
 |password|String|
 
 |Patametro|Tipo|
-|-|-|-|-|
+|-|-|
 |preinicio|String|
 
 Response
 
 |Patametro|Tipo|
-|-|-|-|-|
+|-|-|
 |pase|boolean|
 |user|String|
 |email|String|
@@ -184,7 +189,7 @@ POST /api/v1/users/carrito
 Body 
 
 |Patametro|Tipo|
-|-|-|-|-|
+|-|-|
 |codigo|String|
 |carrito| Array[String]|
 
